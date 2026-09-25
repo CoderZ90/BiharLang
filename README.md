@@ -81,3 +81,13 @@
 | `baitho`   | enter/start REPL                        | `bihari baitho`             |
 | `saaf`     | format/clean                            | `bihari saaf main.bh`       |
 | `madad`    | help                                    | `bihari madad`              |
+
+
+## Completed
+✅ TokenType definitions
+✅ Lexer with readChar/readPosition state machine
+✅ Identifier & keyword lookup
+✅ Number parsing
+✅ String parsing  
+✅ Whitespace handling
+✅ Full test suite PASSING

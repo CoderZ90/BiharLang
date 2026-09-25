@@ -6,17 +6,32 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `rakha x = 10`
+	input := `rakha naam = "Babu"
+rakha umar = 20
+agar umar > 18 {
+	bol "Bada ba"
+}`
 
-	// The tokens we expect the lexer to produce, in exact order
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
 		{token.RAKHA, "rakha"},
-		{token.IDENT, "x"},
+		{token.IDENT, "naam"},
 		{token.ASSIGN, "="},
-		{token.INT, "10"},
+		{token.STRING, "Babu"},
+		{token.RAKHA, "rakha"},
+		{token.IDENT, "umar"},
+		{token.ASSIGN, "="},
+		{token.INT, "20"},
+		{token.AGAR, "agar"},
+		{token.IDENT, "umar"},
+		{token.GT, ">"},
+		{token.INT, "18"},
+		{token.LBRACE, "{"},
+		{token.BOL, "bol"},
+		{token.STRING, "Bada ba"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 

@@ -37,7 +37,7 @@ const (
 	// Keywords
 	RAKHA    = "RAKHA"    // let, var
 	BOL      = "BOL"      // print
-	JODI     = "JODI"     // if
+	AGAR     = "AGAR"     // if
 	NATA     = "NATA"     // else
 	JABTAK   = "JABTAK"   // while
 	KAAM     = "KAAM"     // function
@@ -68,7 +68,7 @@ type Token struct {
 var keywords = map[string]TokenType{
 	"rakha":    RAKHA,
 	"bol":      BOL,
-	"jodi":     JODI,
+	"agar":     AGAR,
 	"nata":     NATA,
 	"jabtak":   JABTAK,
 	"kaam":     KAAM,
