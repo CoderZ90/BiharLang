@@ -28,7 +28,6 @@ func (p *Program) TokenLiteral() string {
 }
 
 // Expressions
-// Identifier represents a variable name like x or naam
 type Identifier struct {
 	Token token.Token // the IDENT token
 	Value string      // the actual name, e.g. "x"
@@ -40,7 +39,6 @@ func (i *Identifier) TokenLiteral() string {
 }
 
 // Statements
-// LetStatement represents: rakha <name> = <value>
 type LetStatement struct {
 	Token token.Token // the 'rakha' token
 	Name  *Identifier // the variable name (x)
