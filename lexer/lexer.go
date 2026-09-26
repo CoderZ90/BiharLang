@@ -97,6 +97,7 @@ func (l *Lexer) NextToken() token.Token {
 	return tok
 }
 
+// Helper function
 func (l *Lexer) readIdentifier() string {
 	position := l.position
 	for isLetter(l.ch) {

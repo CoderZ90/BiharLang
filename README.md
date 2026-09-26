@@ -91,3 +91,40 @@
 ✅ String parsing  
 ✅ Whitespace handling
 ✅ Full test suite PASSING
+
+
+## Project structure
+
+```
+bihari/
+│
+├── cmd/
+│   └── bihari/
+│       └── main.go          ← Entry point (runs .bh files / REPL)
+│
+├── token/
+│   └── token.go             ✅ DONE
+│
+├── lexer/
+│   ├── lexer.go             ✅ DONE
+│   └── lexer_test.go        ✅ DONE
+│
+├── ast/
+│   └── ast.go               🆕 Phase 2 - AST node definitions
+│
+├── parser/
+│   ├── parser.go            🆕 Phase 2 - Turns tokens into AST
+│   └── parser_test.go
+│
+├── object/
+│   └── object.go            🆕 Phase 3 - Runtime values
+│
+├── evaluator/
+│   ├── evaluator.go         🆕 Phase 3 - Executes the AST
+│   └── evaluator_test.go
+│
+├── repl/
+│   └── repl.go              🆕 Phase 4 - Interactive mode
+│
+└── go.mod
+```
