@@ -21,7 +21,7 @@ func main() {
 	fmt.Println("        Kaa re bhai, tayyar baa? Chala code kari :)")
 	fmt.Println("        Type 'exit' to quit.")
 	fmt.Println()
-	fmt.Println("──────────────────────────────────────────────────────────────")
+	fmt.Println("───────────────────────────────────────────────────────────────")
 	fmt.Println()
 
 	repl.Start(os.Stdin, os.Stdout)
