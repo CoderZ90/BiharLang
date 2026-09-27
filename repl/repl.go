@@ -27,7 +27,7 @@ func Start(in io.Reader, out io.Writer) {
 
 		// Allow the user to exit
 		if line == "exit" || line == "quit" {
-			fmt.Fprintln(out, "Chala bhai mila tani fir! 👋")
+			fmt.Fprintln(out, "Chala bhai mila tani fir!")
 			return
 		}
 
