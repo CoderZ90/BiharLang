@@ -64,6 +64,8 @@ func (p *Parser) parseStatement() ast.Statement {
 	switch p.curToken.Type {
 	case token.RAKHA:
 		return p.parseLetStatement()
+	case token.BOL:
+		return p.parsePrintStatement()
 	default:
 		return nil
 	}
@@ -85,6 +87,16 @@ func (p *Parser) parseLetStatement() *ast.LetStatement {
 	p.nextToken()
 
 	stmt.Value = p.parseExpression(LOWEST)
+
+	return stmt
+}
+
+func (p *Parser) parsePrintStatement() *ast.PrintStatement {
+	stmt := &ast.PrintStatement{Token: p.curToken}
+
+	p.nextToken()
+
+	stmt.Expression = p.parseExpression(LOWEST)
 
 	return stmt
 }

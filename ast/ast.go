@@ -75,3 +75,12 @@ type BooleanLiteral struct {
 
 func (bl *BooleanLiteral) expressionNode()      {}
 func (bl *BooleanLiteral) TokenLiteral() string { return bl.Token.Literal }
+
+// PrintStatement represents: bol <expression>
+type PrintStatement struct {
+	Token      token.Token // the 'bol' token
+	Expression Expression  // what to print (string, number, variable, etc.)
+}
+
+func (ps *PrintStatement) statementNode()       {}
+func (ps *PrintStatement) TokenLiteral() string { return ps.Token.Literal }
