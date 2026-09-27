@@ -3,6 +3,7 @@ package evaluator
 import (
 	"bihari/ast"
 	"bihari/object"
+	"fmt"
 )
 
 func Eval(node ast.Node, env *Environment) object.Object {
@@ -18,6 +19,7 @@ func Eval(node ast.Node, env *Environment) object.Object {
 
 	case *ast.PrintStatement:
 		val := Eval(node.Expression, env)
+		fmt.Println(val.Inspect())
 		return val
 
 	case *ast.IntegerLiteral:
