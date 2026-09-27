@@ -15,12 +15,12 @@ func Eval(node ast.Node, env *Environment) object.Object {
 	case *ast.LetStatement:
 		val := Eval(node.Value, env)
 		env.Set(node.Name.Value, val)
-		return val
+		return nil
 
 	case *ast.PrintStatement:
 		val := Eval(node.Expression, env)
 		fmt.Println(val.Inspect())
-		return val
+		return nil
 
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
