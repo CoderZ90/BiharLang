@@ -84,3 +84,22 @@ type PrintStatement struct {
 
 func (ps *PrintStatement) statementNode()       {}
 func (ps *PrintStatement) TokenLiteral() string { return ps.Token.Literal }
+
+// InfixExpression represents: <left> <operator> <right>
+type InfixExpression struct {
+	Token    token.Token
+	Left     Expression
+	Operator string
+	Right    Expression
+}
+
+func (oe *InfixExpression) expressionNode()      {}
+func (oe *InfixExpression) TokenLiteral() string { return oe.Token.Literal }
+
+type ExpressionStatement struct {
+	Token      token.Token // the first token of the expression
+	Expression Expression
+}
+
+func (es *ExpressionStatement) statementNode()       {}
+func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }

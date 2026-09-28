@@ -20,31 +20,74 @@ func TestEvalIntegerExpression(t *testing.T) {
 		input    string
 		expected int64
 	}{
-		{"rakha x = 10", 10},
-		{"rakha x = 50", 50},
+		{"10", 10},
+		{"50", 50},
+
+		{"10 + 20", 30},
+		{"50 - 10", 40},
+		{"5 * 5", 25},
+		{"10 / 2", 5},
+
+		{"2 + 3 * 4", 14},
+		{"2 * 3 + 4", 10},
 	}
 
 	for _, tt := range tests {
 		evaluated := testEval(tt.input)
-		intObj, ok := evaluated.(*object.Integer)
-		if !ok {
-			t.Fatalf("Expected *object.Integer, got %T (%v)", evaluated, evaluated)
-		}
-		if intObj.Value != tt.expected {
-			t.Fatalf("Expected %d, got %d", tt.expected, intObj.Value)
-		}
+		testIntegerObject(t, evaluated, tt.expected)
 	}
 }
 
 func TestEvalStringExpression(t *testing.T) {
-	evaluated := testEval(`rakha naam = "Babu"`)
+	input := `"Babu"`
+	evaluated := testEval(input)
 
 	strObj, ok := evaluated.(*object.String)
 	if !ok {
 		t.Fatalf("Expected *object.String, got %T", evaluated)
 	}
-
 	if strObj.Value != "Babu" {
 		t.Fatalf("Expected 'Babu', got '%s'", strObj.Value)
 	}
+}
+
+func TestEvalBooleanExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{"sach", true},
+		{"jhoot", false},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testBooleanObject(t, evaluated, tt.expected)
+	}
+}
+
+func testIntegerObject(t *testing.T, obj object.Object, expected int64) bool {
+	result, ok := obj.(*object.Integer)
+	if !ok {
+		t.Errorf("object is not Integer. got=%T (%+v)", obj, obj)
+		return false
+	}
+	if result.Value != expected {
+		t.Errorf("object has wrong value. got=%d, want=%d", result.Value, expected)
+		return false
+	}
+	return true
+}
+
+func testBooleanObject(t *testing.T, obj object.Object, expected bool) bool {
+	result, ok := obj.(*object.Boolean)
+	if !ok {
+		t.Errorf("object is not Boolean. got=%T (%+v)", obj, obj)
+		return false
+	}
+	if result.Value != expected {
+		t.Errorf("object has wrong value. got=%t, want=%t", result.Value, expected)
+		return false
+	}
+	return true
 }
