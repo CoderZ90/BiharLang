@@ -19,6 +19,9 @@ func Eval(node ast.Node, env *Environment) object.Object {
 
 	case *ast.PrintStatement:
 		val := Eval(node.Expression, env)
+		if isError(val) {
+			return val // propagates error
+		}
 		fmt.Println(val.Inspect())
 		return nil
 
@@ -60,14 +63,25 @@ func evalIdentifier(node *ast.Identifier, env *Environment) object.Object {
 	if val, ok := env.Get(node.Value); ok {
 		return val
 	}
-	return nil
+
+	return newError("are bhai, '%s' naam ke variable hawa me ta na ba! Pehle `rakha` ta.", node.Value)
 }
 
 func evalInfixExpression(operator string, left, right object.Object) object.Object {
+	if isError(left) {
+		return left
+	}
+	if isError(right) {
+		return right
+	}
 	if left.Type() == object.INTEGER && right.Type() == object.INTEGER {
 		return evalIntegerInfixExpression(operator, left, right)
 	}
-	return nil
+	if left.Type() != right.Type() {
+		return newError("bhai, %s aur %s ke jod na ho sakat baa! 💀", left.Type(), right.Type())
+	}
+
+	return newError("bhai, %s %s %s ka matlab ka baa? 💀", left.Type(), operator, right.Type())
 }
 
 func evalIntegerInfixExpression(operator string, left, right object.Object) object.Object {
@@ -101,4 +115,15 @@ func nativeBoolToBooleanObject(input bool) *object.Boolean {
 		return &object.Boolean{Value: true}
 	}
 	return &object.Boolean{Value: false}
+}
+
+func newError(format string, a ...interface{}) *object.Error {
+	return &object.Error{Message: fmt.Sprintf(format, a...)}
+}
+
+func isError(obj object.Object) bool {
+	if obj != nil {
+		return obj.Type() == object.ERROR
+	}
+	return false
 }

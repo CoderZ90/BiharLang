@@ -7,6 +7,7 @@ import (
 
 	"bihari/evaluator"
 	"bihari/lexer"
+	"bihari/object"
 	"bihari/parser"
 )
 
@@ -37,7 +38,11 @@ func Start(in io.Reader, out io.Writer) {
 
 		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
-			io.WriteString(out, evaluated.Inspect()+"\n")
+			if evaluated.Type() == object.ERROR {
+				fmt.Fprintln(out, evaluated.Inspect())
+			} else {
+				io.WriteString(out, evaluated.Inspect()+"\n")
+			}
 		}
 	}
 }

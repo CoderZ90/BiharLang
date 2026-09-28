@@ -47,3 +47,11 @@ type Null struct{}
 
 func (n *Null) Type() ObjectType { return NULL }
 func (n *Null) Inspect() string  { return "kuchnahi" }
+
+// Error
+type Error struct {
+	Message string
+}
+
+func (e *Error) Type() ObjectType { return ERROR }
+func (e *Error) Inspect() string  { return "💀 ERROR: " + e.Message }
