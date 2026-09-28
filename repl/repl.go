@@ -25,9 +25,7 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
-
-		// Allow the user to exit
-		if line == "exit" || line == "quit" {
+		if line == "exit" || line == "quit" || line == "bye" {
 			fmt.Fprintln(out, "Chala bhai mila tani fir!")
 			return
 		}
