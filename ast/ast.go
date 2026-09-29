@@ -115,11 +115,41 @@ func (bs *BlockStatement) TokenLiteral() string { return bs.Token.Literal }
 
 // IfExpression represents: agar <condition> { ... } nata { ... }
 type IfExpression struct {
-	Token       token.Token     // the 'agar' token
-	Condition   Expression      // the condition to check
-	Consequence *BlockStatement // code if condition is sach
-	Alternative *BlockStatement // code if condition is jhoot (optional)
+	Token       token.Token
+	Condition   Expression
+	Consequence *BlockStatement
+	Alternative *BlockStatement
 }
 
 func (ie *IfExpression) expressionNode()      {}
 func (ie *IfExpression) TokenLiteral() string { return ie.Token.Literal }
+
+// FunctionLiteral represents: kaam naam(params) { body }
+type FunctionLiteral struct {
+	Token      token.Token
+	Name       *Identifier
+	Parameters []*Identifier
+	Body       *BlockStatement
+}
+
+func (fl *FunctionLiteral) expressionNode()      {}
+func (fl *FunctionLiteral) TokenLiteral() string { return fl.Token.Literal }
+
+// CallExpression represents: jor(10, 20)
+type CallExpression struct {
+	Token     token.Token
+	Function  Expression
+	Arguments []Expression
+}
+
+func (ce *CallExpression) expressionNode()      {}
+func (ce *CallExpression) TokenLiteral() string { return ce.Token.Literal }
+
+// ReturnStatement represents: lauta <value>
+type ReturnStatement struct {
+	Token       token.Token
+	ReturnValue Expression
+}
+
+func (rs *ReturnStatement) statementNode()       {}
+func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
