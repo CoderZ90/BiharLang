@@ -44,6 +44,12 @@ func Eval(node ast.Node, env *Environment) object.Object {
 
 	case *ast.ExpressionStatement:
 		return Eval(node.Expression, env)
+
+	case *ast.BlockStatement:
+		return evalBlockStatement(node, env)
+
+	case *ast.IfExpression:
+		return evalIfExpression(node, env)
 	}
 
 	return nil
@@ -126,4 +132,47 @@ func isError(obj object.Object) bool {
 		return obj.Type() == object.ERROR
 	}
 	return false
+}
+
+func evalBlockStatement(block *ast.BlockStatement, env *Environment) object.Object {
+	var result object.Object
+
+	for _, statement := range block.Statements {
+		result = Eval(statement, env)
+	}
+
+	return result
+}
+
+func evalIfExpression(ie *ast.IfExpression, env *Environment) object.Object {
+	condition := Eval(ie.Condition, env)
+	if isError(condition) {
+		return condition
+	}
+
+	if isTruthy(condition) {
+		return evalBlockStatement(ie.Consequence, env)
+	} else if ie.Alternative != nil {
+		return evalBlockStatement(ie.Alternative, env)
+	} else {
+		return nil
+	}
+}
+
+/*
+isTruthy determines what counts as "true" in Bihari. sach is true. jhoot and kuchnahi (null) are false. Everything else is true!
+*/
+func isTruthy(obj object.Object) bool {
+	switch obj {
+	case nil:
+		return false
+	default:
+		if b, ok := obj.(*object.Boolean); ok {
+			return b.Value
+		}
+		if _, ok := obj.(*object.Null); ok {
+			return false
+		}
+		return true
+	}
 }
