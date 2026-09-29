@@ -127,7 +127,6 @@ func evalInfixExpression(operator string, left, right object.Object) object.Obje
 		return right
 	}
 
-	// Integer operations
 	if left.Type() == object.INTEGER && right.Type() == object.INTEGER {
 		return evalIntegerInfixExpression(operator, left, right)
 	}
