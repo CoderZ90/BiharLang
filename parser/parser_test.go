@@ -107,3 +107,32 @@ func TestPrintStatements(t *testing.T) {
 		t.Fatalf("Expected 'Ka ho duniya!', got '%s'", strLit.Value)
 	}
 }
+
+func TestIfExpression(t *testing.T) {
+	input := `agar (x < y) { 1 } nata { 2 }`
+
+	l := lexer.New(input)
+	p := New(l)
+	program := p.ParseProgram()
+
+	if len(program.Statements) != 1 {
+		t.Fatalf("Expected 1 statement, got %d", len(program.Statements))
+	}
+
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
+	if !ok {
+		t.Fatalf("Expected *ast.ExpressionStatement, got %T", program.Statements[0])
+	}
+
+	exp, ok := stmt.Expression.(*ast.IfExpression)
+	if !ok {
+		t.Fatalf("Expected *ast.IfExpression, got %T", stmt.Expression)
+	}
+
+	if exp.Consequence == nil {
+		t.Fatalf("Consequence is nil")
+	}
+	if exp.Alternative == nil {
+		t.Fatalf("Alternative is nil")
+	}
+}

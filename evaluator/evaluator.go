@@ -6,6 +6,12 @@ import (
 	"fmt"
 )
 
+var (
+	NULL  = &object.Null{}
+	TRUE  = &object.Boolean{Value: true}
+	FALSE = &object.Boolean{Value: false}
+)
+
 func Eval(node ast.Node, env *Environment) object.Object {
 	switch node := node.(type) {
 
@@ -118,9 +124,9 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 
 func nativeBoolToBooleanObject(input bool) *object.Boolean {
 	if input {
-		return &object.Boolean{Value: true}
+		return TRUE
 	}
-	return &object.Boolean{Value: false}
+	return FALSE
 }
 
 func newError(format string, a ...interface{}) *object.Error {
@@ -155,7 +161,7 @@ func evalIfExpression(ie *ast.IfExpression, env *Environment) object.Object {
 	} else if ie.Alternative != nil {
 		return evalBlockStatement(ie.Alternative, env)
 	} else {
-		return nil
+		return NULL
 	}
 }
 

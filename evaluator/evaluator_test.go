@@ -111,3 +111,40 @@ func TestComparisonExpressions(t *testing.T) {
 		testBooleanObject(t, evaluated, tt.expected)
 	}
 }
+
+func TestIfElseExpressions(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected interface{} // Can be int64 or *object.Null
+	}{
+		{"agar (sach) { 10 }", int64(10)},
+		{"agar (jhoot) { 10 }", NULL},
+		{"agar (1 < 2) { 10 }", int64(10)},
+		{"agar (1 > 2) { 10 }", NULL},
+		{"agar (1 > 2) { 10 } nata { 20 }", int64(20)},
+		{"agar (1 < 2) { 10 } nata { 20 }", int64(10)},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+
+		// Check if we expected NULL
+		if tt.expected == NULL {
+			if evaluated != NULL {
+				t.Errorf("Expected NULL, got %T (%v)", evaluated, evaluated)
+			}
+			continue
+		}
+
+		// Otherwise, check for integer
+		integer, ok := evaluated.(*object.Integer)
+		if !ok {
+			t.Errorf("Expected *object.Integer, got %T (%v)", evaluated, evaluated)
+			continue
+		}
+
+		if integer.Value != tt.expected.(int64) {
+			t.Errorf("Expected %d, got %d", tt.expected, integer.Value)
+		}
+	}
+}
