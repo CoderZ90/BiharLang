@@ -44,11 +44,9 @@ func Start(in io.Reader, out io.Writer) {
 		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
 			if evaluated.Type() == object.ERROR {
-				fmt.Fprintln(out, "❌ Runtime Error:", evaluated.Inspect())
-			} else {
-				if evaluated.Type() != object.NULL {
-					io.WriteString(out, evaluated.Inspect()+"\n")
-				}
+				fmt.Fprintln(out, evaluated.Inspect())
+			} else if evaluated.Type() != object.NULL && evaluated.Type() != object.FUNCTION {
+				io.WriteString(out, evaluated.Inspect()+"\n")
 			}
 		}
 	}

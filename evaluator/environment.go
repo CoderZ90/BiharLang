@@ -4,23 +4,31 @@ import "bihari/object"
 
 type Environment struct {
 	store map[string]object.Object
+	outer *Environment
 }
 
-// Init new environment, store={}
 func NewEnvironment() *Environment {
 	return &Environment{
 		store: make(map[string]object.Object),
+		outer: nil,
 	}
 }
 
-// putting something in the environment
+func NewEnclosedEnvironment(outer *Environment) *Environment {
+	env := NewEnvironment()
+	env.outer = outer
+	return env
+}
+
 func (e *Environment) Set(name string, val object.Object) object.Object {
 	e.store[name] = val
 	return val
 }
 
-//getting a value back
 func (e *Environment) Get(name string) (object.Object, bool) {
 	obj, ok := e.store[name]
+	if !ok && e.outer != nil {
+		obj, ok = e.outer.Get(name)
+	}
 	return obj, ok
 }

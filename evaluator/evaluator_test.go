@@ -148,3 +148,121 @@ func TestIfElseExpressions(t *testing.T) {
 		}
 	}
 }
+
+func TestFunctionObject(t *testing.T) {
+	input := "kaam jor(x, y) { lauta x + y }"
+
+	evaluated := testEval(input)
+	function, ok := evaluated.(*object.Function)
+	if !ok {
+		t.Fatalf("Expected *object.Function, got %T (%v)", evaluated, evaluated)
+	}
+
+	if len(function.Parameters) != 2 {
+		t.Fatalf("Expected 2 parameters, got %d", len(function.Parameters))
+	}
+
+	expectedParams := []string{"x", "y"}
+	for i, param := range function.Parameters {
+		if param.Value != expectedParams[i] {
+			t.Errorf("Expected parameter %d to be '%s', got '%s'", i, expectedParams[i], param.Value)
+		}
+	}
+
+	if function.Body == nil {
+		t.Fatalf("Function body is nil")
+	}
+
+	if len(function.Body.Statements) != 1 {
+		t.Fatalf("Expected 1 statement in body, got %d", len(function.Body.Statements))
+	}
+}
+
+func TestFunctionCalls(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int64
+	}{
+		// Identity function
+		{"kaam identity(x) { lauta x } identity(5)", 5},
+
+		// Double function
+		{"kaam double(x) { lauta x * 2 } double(5)", 10},
+
+		// Add function
+		{"kaam add(x, y) { lauta x + y } add(5, 5)", 10},
+
+		// Nested function calls
+		{"kaam add(x, y) { lauta x + y } add(5 + 5, add(5, 5))", 20},
+
+		// Complex nested
+		{"kaam add(x, y) { lauta x + y } kaam mul(x, y) { lauta x * y } add(mul(2, 3), 4)", 10},
+
+		// Function returning function result
+		{"kaam jor(x, y) { lauta x + y } jor(1, 2)", 3},
+
+		// Implicit return (last expression)
+		{"kaam test() { 10 } test()", 10},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testIntegerObject(t, evaluated, tt.expected)
+	}
+}
+
+func TestClosures(t *testing.T) {
+	input := `
+	rakha x = 10
+	kaam getX() { lauta x }
+	getX()
+	`
+
+	evaluated := testEval(input)
+	testIntegerObject(t, evaluated, 10)
+}
+
+func TestFunctionErrors(t *testing.T) {
+	tests := []struct {
+		input           string
+		expectedMessage string
+	}{
+		// Calling non-function
+		{"rakha x = 10 x()", "arre bhai! 'INTEGER' kaam nahi ba! 💀"},
+
+		// Wrong number of arguments
+		{"kaam add(x, y) { lauta x + y } add(1)", "arre bhai! 2 params chahiye, 1 milal 💀"},
+		{"kaam add(x, y) { lauta x + y } add(1, 2, 3)", "arre bhai! 2 params chahiye, 3 milal 💀"},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+
+		errObj, ok := evaluated.(*object.Error)
+		if !ok {
+			t.Errorf("Expected *object.Error, got %T (%v)", evaluated, evaluated)
+			continue
+		}
+
+		if errObj.Message != tt.expectedMessage {
+			t.Errorf("Expected error message '%s', got '%s'", tt.expectedMessage, errObj.Message)
+		}
+	}
+}
+
+func TestStringConcatenationInFunctions(t *testing.T) {
+	input := `
+	kaam greeting(naam) { lauta "Ka ho " + naam + "!" }
+	greeting("Babu")
+	`
+
+	evaluated := testEval(input)
+	strObj, ok := evaluated.(*object.String)
+	if !ok {
+		t.Fatalf("Expected *object.String, got %T (%v)", evaluated, evaluated)
+	}
+
+	if strObj.Value != "Ka ho Babu!" {
+		t.Errorf("Expected 'Ka ho Babu!', got '%s'", strObj.Value)
+	}
+}
