@@ -103,3 +103,23 @@ type ExpressionStatement struct {
 
 func (es *ExpressionStatement) statementNode()       {}
 func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
+
+// BlockStatement represents a group of statements inside {}
+type BlockStatement struct {
+	Token      token.Token
+	Statements []Statement
+}
+
+func (bs *BlockStatement) statementNode()       {}
+func (bs *BlockStatement) TokenLiteral() string { return bs.Token.Literal }
+
+// IfExpression represents: agar <condition> { ... } nata { ... }
+type IfExpression struct {
+	Token       token.Token     // the 'agar' token
+	Condition   Expression      // the condition to check
+	Consequence *BlockStatement // code if condition is sach
+	Alternative *BlockStatement // code if condition is jhoot (optional)
+}
+
+func (ie *IfExpression) expressionNode()      {}
+func (ie *IfExpression) TokenLiteral() string { return ie.Token.Literal }

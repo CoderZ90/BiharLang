@@ -91,3 +91,23 @@ func testBooleanObject(t *testing.T, obj object.Object, expected bool) bool {
 	}
 	return true
 }
+
+func TestComparisonExpressions(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{"10 > 5", true},
+		{"5 > 10", false},
+		{"10 < 20", true},
+		{"20 < 10", false},
+		{"10 == 10", true},
+		{"10 != 10", false},
+		{"10 != 5", true},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+		testBooleanObject(t, evaluated, tt.expected)
+	}
+}

@@ -20,7 +20,7 @@ func Eval(node ast.Node, env *Environment) object.Object {
 	case *ast.PrintStatement:
 		val := Eval(node.Expression, env)
 		if isError(val) {
-			return val // propagates error
+			return val // propagate error
 		}
 		fmt.Println(val.Inspect())
 		return nil

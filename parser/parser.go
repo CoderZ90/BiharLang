@@ -11,11 +11,17 @@ import (
 const (
 	_ int = iota
 	LOWEST
-	SUM     // + and -
-	PRODUCT // * and /
+	EQUALS      // == and !=
+	LESSGREATER // > and <
+	SUM         // + and -
+	PRODUCT     // * and /
 )
 
 var precedences = map[token.TokenType]int{
+	token.EQ:       EQUALS,
+	token.NOT_EQ:   EQUALS,
+	token.LT:       LESSGREATER,
+	token.GT:       LESSGREATER,
 	token.PLUS:     SUM,
 	token.MINUS:    SUM,
 	token.ASTERISK: PRODUCT,
@@ -51,6 +57,11 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerInfix(token.MINUS, p.parseInfixExpression)
 	p.registerInfix(token.ASTERISK, p.parseInfixExpression)
 	p.registerInfix(token.SLASH, p.parseInfixExpression)
+
+	p.registerInfix(token.LT, p.parseInfixExpression)
+	p.registerInfix(token.GT, p.parseInfixExpression)
+	p.registerInfix(token.EQ, p.parseInfixExpression)
+	p.registerInfix(token.NOT_EQ, p.parseInfixExpression)
 
 	p.nextToken()
 	p.nextToken()
@@ -96,7 +107,6 @@ func (p *Parser) parseStatement() ast.Statement {
 	case token.BOL:
 		return p.parsePrintStatement()
 	default:
-		// 👇 NEW: Treat it as an expression statement!
 		return p.parseExpressionStatement()
 	}
 }

@@ -84,13 +84,22 @@
 
 
 ## Completed
-✅ TokenType definitions
-✅ Lexer with readChar/readPosition state machine
-✅ Identifier & keyword lookup
-✅ Number parsing
-✅ String parsing  
-✅ Whitespace handling
-✅ Full test suite PASSING
+- ✅ TokenType definitions
+- ✅ Lexer with readChar/readPosition state machine
+- ✅ Identifier & keyword lookup
+- ✅ Number parsing
+- ✅ String parsing  
+- ✅ Whitespace handling
+- ✅ Full test suite PASSING
+- ✅ Store variables (rakha)
+- ✅ Do math (10 + 20 * 3)
+- ✅ Print (bol)
+- ✅ Handle errors gracefully
+
+What's missing:
+- ❌ Comparisons (x > 10, x == 5)
+- ❌ Conditions (agar x > 10 { ... } warna { ... })
+- ❌ Loops (jabtak x < 10 { ... })
 
 
 ## Project structure
