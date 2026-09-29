@@ -4,6 +4,7 @@ import (
 	"bihari/ast"
 	"bihari/lexer"
 	"bihari/token"
+	"fmt"
 	"strconv"
 )
 
@@ -37,13 +38,17 @@ type Parser struct {
 	l         *lexer.Lexer
 	curToken  token.Token
 	peekToken token.Token
+	errors    []string
 
 	prefixParseFns map[token.TokenType]prefixParseFn
 	infixParseFns  map[token.TokenType]infixParseFn
 }
 
 func New(l *lexer.Lexer) *Parser {
-	p := &Parser{l: l}
+	p := &Parser{
+		l:      l,
+		errors: []string{},
+	}
 
 	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
 	p.registerPrefix(token.INT, p.parseIntegerLiteral)
@@ -205,8 +210,10 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 	if p.peekToken.Type == t {
 		p.nextToken()
 		return true
+	} else {
+		p.peekError(t)
+		return false
 	}
-	return false
 }
 
 // parseExpressionStatement handles bare expressions like `10` or `x + y`
@@ -218,7 +225,6 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 
 func (p *Parser) parseIfExpression() ast.Expression {
 	expression := &ast.IfExpression{Token: p.curToken}
-
 	if !p.expectPeek(token.LPAREN) {
 		return nil
 	}
@@ -263,4 +269,18 @@ func (p *Parser) parseBlockStatement() *ast.BlockStatement {
 	}
 
 	return block
+}
+
+func (p *Parser) Errors() []string {
+	return p.errors
+}
+
+func (p *Parser) peekError(expected token.TokenType) {
+	msg := fmt.Sprintf("ka ho bhai syntax to dekha, '%s' chahi", expected)
+	p.errors = append(p.errors, msg)
+}
+
+func (p *Parser) curError(expected token.TokenType) {
+	msg := fmt.Sprintf("ka ho bhai syntax to dekha, '%s' chahi", expected)
+	p.errors = append(p.errors, msg)
 }

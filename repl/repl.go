@@ -34,12 +34,21 @@ func Start(in io.Reader, out io.Writer) {
 		p := parser.New(l)
 		program := p.ParseProgram()
 
+		if len(p.Errors()) > 0 {
+			for _, msg := range p.Errors() {
+				fmt.Fprintln(out, "❌ Syntax Error:", msg)
+			}
+			continue
+		}
+
 		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
 			if evaluated.Type() == object.ERROR {
-				fmt.Fprintln(out, evaluated.Inspect())
+				fmt.Fprintln(out, "❌ Runtime Error:", evaluated.Inspect())
 			} else {
-				io.WriteString(out, evaluated.Inspect()+"\n")
+				if evaluated.Type() != object.NULL {
+					io.WriteString(out, evaluated.Inspect()+"\n")
+				}
 			}
 		}
 	}
