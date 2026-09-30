@@ -1,14 +1,17 @@
 rakha naam = "Babu"
-rakha paisa = 500
 
-kaam greeting(n) {
-    lauta "Ka ho " + n + "!"
+kaam greeting(name) {
+    lauta "Ka ho " + name + "!"
 }
 
 bol greeting(naam)
 
-agar (paisa > 100) {
-    bol "Bada ameer ba!"
-} nata {
-    bol "Garib ba re bhai..."
+bol "Ginti shuru kari:"
+
+rakha x = 1
+jabtak (x <= 5) {
+    bol x
+    rakha x = x + 1
 }
+
+bol "Ginti khatam!"

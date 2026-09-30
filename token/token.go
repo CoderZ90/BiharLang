@@ -23,6 +23,8 @@ const (
 	// Comparison
 	LT     = "<"
 	GT     = ">"
+	LTE    = "<="
+	GTE    = ">="
 	EQ     = "=="
 	NOT_EQ = "!="
 

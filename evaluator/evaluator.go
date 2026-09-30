@@ -89,6 +89,9 @@ func Eval(node ast.Node, env *Environment) object.Object {
 			return val
 		}
 		return &object.ReturnValue{Value: val}
+
+	case *ast.WhileExpression:
+		return evalWhileExpression(node, env)
 	}
 
 	return nil
@@ -159,6 +162,10 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		return nativeBoolToBooleanObject(leftVal < rightVal)
 	case ">":
 		return nativeBoolToBooleanObject(leftVal > rightVal)
+	case "<=":
+		return nativeBoolToBooleanObject(leftVal <= rightVal)
+	case ">=":
+		return nativeBoolToBooleanObject(leftVal >= rightVal)
 	case "==":
 		return nativeBoolToBooleanObject(leftVal == rightVal)
 	case "!=":
@@ -290,4 +297,31 @@ func applyFunction(fn object.Object, args []object.Object) object.Object {
 	}
 
 	return evaluated
+}
+
+func evalWhileExpression(we *ast.WhileExpression, env *Environment) object.Object {
+	var result object.Object
+
+	for {
+		// Evaluate the condition each iteration
+		condition := Eval(we.Condition, env)
+		if isError(condition) {
+			return condition
+		}
+
+		// If condition is false, break out of the loop
+		if !isTruthy(condition) {
+			break
+		}
+
+		// Execute the loop body
+		result = evalBlockStatement(we.Body, env)
+
+		// If we got a ReturnValue, unwrap it and return
+		if returnValue, ok := result.(*object.ReturnValue); ok {
+			return returnValue.Value
+		}
+	}
+
+	return result
 }
