@@ -1,17 +1,24 @@
-rakha naam = "Babu"
+bol "Patterns:"
+bol ""
 
-kaam greeting(name) {
-    lauta "Ka ho " + name + "!"
+rakha rows = 5
+rakha i = 1
+
+jabtak (i <= rows) {
+    rakha spaces = ""
+    rakha s = 1
+    jabtak (s <= rows - i) {
+        rakha spaces = spaces + " "
+        rakha s = s + 1
+    }
+
+    rakha stars = ""
+    rakha j = 1
+    jabtak (j <= i * 2 - 1) {
+        rakha stars = stars + "*"
+        rakha j = j + 1
+    }
+
+    bol spaces + stars
+    rakha i = i + 1
 }
-
-bol greeting(naam)
-
-bol "Ginti shuru kari:"
-
-rakha x = 1
-jabtak (x <= 10) {
-    bol x
-    rakha x = x + 1
-}
-
-bol "Ginti khatam!"
