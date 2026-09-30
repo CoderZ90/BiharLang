@@ -9,7 +9,7 @@ bol greeting(naam)
 bol "Ginti shuru kari:"
 
 rakha x = 1
-jabtak (x <= 5) {
+jabtak (x <= 10) {
     bol x
     rakha x = x + 1
 }
