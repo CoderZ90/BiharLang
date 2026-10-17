@@ -1,0 +1,5 @@
+rakha a = 0
+jabtak (a <= 200000) {
+    rakha a = a+1
+    bol a
+}

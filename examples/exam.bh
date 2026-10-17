@@ -1,0 +1,106 @@
+
+bol "================================"
+bol "       BABU VS THE EXAM"
+bol "================================"
+bol "Ka ho Babu! Exam hall mein swagat ba!"
+bol "5 sawal ba. Dekhi kitna aukaat ba!"
+bol ""
+
+rakha score = 0
+
+bol "Sawal 1: Go ke creator kaun company ba?"
+bol "1. Google"
+bol "2. Microsoft"
+bol "3. Facebook"
+
+rakha answer = 1
+
+agar (answer == 1) {
+    bol "Sahi jawab! Ek number milal!"
+    rakha score = score + 1
+} nata {
+    bol "Galat jawab! Babu, padhai kar la!"
+}
+
+bol ""
+bol "Sawal 2: 2 + 2 ke ketna hola?"
+bol "1. 3"
+bol "2. 4"
+bol "3. 5"
+
+rakha answer = 2
+
+agar (answer == 2) {
+    bol "Ekdam sahi! Maths abhi jinda ba!"
+    rakha score = score + 1
+} nata {
+    bol "Arre Babu! Ee ta basic rahal!"
+}
+
+bol ""
+bol "Sawal 3: BiharLang ke implementation kaun language mein ba?"
+bol "1. Python"
+bol "2. Go"
+bol "3. Java"
+
+rakha answer = 2
+
+agar (answer == 2) {
+    bol "Wah re coder! Sahi jawab!"
+    rakha score = score + 1
+} nata {
+    bol "Apne project ke hi bhula gaila? 💀"
+}
+
+bol ""
+bol "Sawal 4: 10 * 5 ke ketna hola?"
+bol "1. 15"
+bol "2. 50"
+bol "3. 100"
+
+rakha answer = 2
+
+agar (answer == 2) {
+    bol "Sahi ba! Calculator ke jarurat naikhe!"
+    rakha score = score + 1
+} nata {
+    bol "Babu, calculator bhi roye lagal!"
+}
+
+bol ""
+bol "Sawal 5: Programming mein bug ke matlab ka ba?"
+bol "1. Ek insect hi hola"
+bol "2. Code mein problem"
+bol "3. Computer ke naam"
+
+rakha answer = 2
+
+agar (answer == 2) {
+    bol "Correct! Bug hunter banata!"
+    rakha score = score + 1
+} nata {
+    bol "Production mein swagat ba, Babu!"
+}
+
+bol ""
+bol "================================"
+bol "          RESULT CARD"
+bol "================================"
+
+bol "Tohar final score:"
+bol score
+bol "Out of:"
+bol 5
+
+agar (score == 5) {
+    bol "FULL MARKS! Tu ta legend bada!"
+} nata {
+    agar (score > 2) {
+        bol "PASS! Babu ke izzat bach gail!"
+    } nata {
+        bol "FAIL! Ab tutorial dekha, gajab beizzati ba!"
+    }
+}
+
+bol "Exam khatam. Ab suti raja bahut scope ba!"
+bol "Jai BiharLang! ❤️"
