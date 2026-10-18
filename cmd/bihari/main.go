@@ -21,10 +21,27 @@ const (
 func main() {
 	printBanner()
 
-	if len(os.Args) > 1 {
-		runFile(os.Args[1])
-	} else {
+	if len(os.Args) < 2 {
 		runREPL()
+		return
+	}
+
+	switch os.Args[1] {
+	case "compile", "run", "c", "r":
+		if len(os.Args) < 3 {
+			fmt.Println(Red + "💀 Arre bhai! File naam ta batao! Example: bh compile main.bh" + Reset)
+			os.Exit(1)
+		}
+		runFile(os.Args[2])
+
+	case "repl":
+		runREPL()
+
+	case "help", "--help", "-h":
+		printHelp()
+
+	default:
+		runFile(os.Args[1])
 	}
 }
 
@@ -37,12 +54,21 @@ func printBanner() {
 	A Toy Programming Language, In Bhojpuri :).              
 	v0.0.0
 	`)
-
 	fmt.Println()
 }
 
-func runREPL() {
+func printHelp() {
+	fmt.Println("Usage:")
+	fmt.Println("  bh <file.bh>          Run a Bihari file")
+	fmt.Println("  bh compile <file.bh>  Compile and run a Bihari file")
+	fmt.Println("  bh run <file.bh>      Same as compile")
+	fmt.Println("  bh repl               Start interactive REPL")
+	fmt.Println("  bh help               Show this help message")
 	fmt.Println()
+	fmt.Println("Kaa re bhai, samajh aail?!")
+}
+
+func runREPL() {
 	fmt.Println("        Kaa re bhai, tayyar baa? Chala code kari :)")
 	fmt.Println("        Type 'exit' to quit.")
 	fmt.Println()
@@ -57,7 +83,7 @@ func runFile(filename string) {
 
 	data, err := os.ReadFile(filename)
 	if err != nil {
-		fmt.Printf("Arre bhaiya! '%s' file kidhar baa! Error: %s\n", filename, err)
+		fmt.Printf(Red+"Arre bhaiya! '%s' file kidhar baa! Error: %s\n"+Reset, filename, err)
 		os.Exit(1)
 	}
 
@@ -69,7 +95,7 @@ func runFile(filename string) {
 
 	if len(p.Errors()) > 0 {
 		for _, msg := range p.Errors() {
-			fmt.Println("❌ Syntax Error:", msg)
+			fmt.Println(Red + "❌ Syntax Error: " + msg + Reset)
 		}
 		os.Exit(1)
 	}
@@ -78,7 +104,7 @@ func runFile(filename string) {
 	evaluated := evaluator.Eval(program, env)
 
 	if evaluated != nil && evaluated.Type() == object.ERROR {
-		fmt.Println("❌ Runtime Error:", evaluated.Inspect())
+		fmt.Println(Red + "❌ Runtime Error: " + evaluated.Inspect() + Reset)
 		os.Exit(1)
 	}
 
