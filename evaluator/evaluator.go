@@ -149,6 +149,10 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 	leftVal := left.(*object.Integer).Value
 	rightVal := right.(*object.Integer).Value
 
+	if (operator == "/" || operator == "%") && rightVal == 0 {
+		return newError("Arree Babu! Eee ka kardela 0 se na ho sakat baa ree")
+	}
+
 	switch operator {
 	case "+":
 		return &object.Integer{Value: leftVal + rightVal}
@@ -156,6 +160,8 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 		return &object.Integer{Value: leftVal - rightVal}
 	case "*":
 		return &object.Integer{Value: leftVal * rightVal}
+	case "%":
+		return &object.Integer{Value: leftVal % rightVal}
 	case "/":
 		return &object.Integer{Value: leftVal / rightVal}
 	case "<":

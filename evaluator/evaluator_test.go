@@ -266,3 +266,49 @@ func TestStringConcatenationInFunctions(t *testing.T) {
 		t.Errorf("Expected 'Ka ho Babu!', got '%s'", strObj.Value)
 	}
 }
+
+func TestModuloExpression(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int64
+	}{
+		{"10 % 3", 1},
+		{"10 % 2", 0},
+		{"7 % 7", 0},
+		{"20 % 6", 2},
+
+		// Precedence: % binds tighter than +
+		{"10 + 6 % 4", 12},
+		{"6 % 4 + 10", 12},
+
+		// Even/odd pattern you'll use constantly
+		{"10 % 2 == 0", 1},
+	}
+
+	for _, tt := range tests {
+		evaluated := testEval(tt.input)
+
+		// Handle boolean expectations
+		if tt.expected == 1 && tt.input == "10 % 2 == 0" {
+			testBooleanObject(t, evaluated, true)
+			continue
+		}
+
+		testIntegerObject(t, evaluated, tt.expected)
+	}
+}
+
+func TestDivisionByZero(t *testing.T) {
+	tests := []string{
+		"10 / 0",
+		"10 % 0",
+	}
+
+	for _, input := range tests {
+		evaluated := testEval(input)
+		_, ok := evaluated.(*object.Error)
+		if !ok {
+			t.Errorf("Expected *object.Error for %s, got %T", input, evaluated)
+		}
+	}
+}

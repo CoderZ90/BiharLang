@@ -19,6 +19,7 @@ const (
 	BANG     = "!"
 	ASTERISK = "*"
 	SLASH    = "/"
+	MODULO   = "%"
 
 	// Comparison
 	LT     = "<"

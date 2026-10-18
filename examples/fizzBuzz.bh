@@ -1,0 +1,27 @@
+kaam fizzBuzz(n) {
+    rakha result = ""
+
+    agar (n % 3 == 0) {
+        rakha result = result + "Fizz"
+    }
+
+    agar (n % 5 == 0) {
+        rakha result = result + "Buzz"
+    }
+
+    agar (result == "") {
+        lauta n
+    }
+
+    lauta result
+}
+
+bol "FizzBuzz 1-20:"
+bol ""
+
+rakha i = 1
+
+jabtak (i <= 20) {
+    bol fizzBuzz(i)
+    rakha i = i + 1
+}
