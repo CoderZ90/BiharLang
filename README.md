@@ -121,10 +121,30 @@ go run ./cmd/bihari main.bh
 ```
 
 Or using the compiled binary:
+```bash
+    bh file.bh # runs a BiharLang file 
+    bh compile main.bh # compile and run a BiharLang file
+    bh repl # repl mode
+    bh help # shows this help message
+```
 
 ```bash
-bh main.bh
-bh compile main.bh
+
+
+        █████▄ ▄▄ ▄▄ ▄▄  ▄▄▄  ▄▄▄▄  ██      ▄▄▄  ▄▄  ▄▄  ▄▄▄▄
+        ██▄▄██ ██ ██▄██ ██▀██ ██▄█▄ ██     ██▀██ ███▄██ ██ ▄▄
+        ██▄▄█▀ ██ ██ ██ ██▀██ ██ ██ ██████ ██▀██ ██ ▀██ ▀███▀
+
+        A Toy Programming Language, In Bhojpuri :).
+        v0.0.0
+
+
+Usage:
+  bh <file.bh>          Run a Bihari file
+  bh compile <file.bh>  Compile and run a Bihari file
+  bh run <file.bh>      Same as compile
+  bh repl               Start interactive REPL
+  bh help               Show this help message
 ```
 
 ### Start the Interactive REPL
