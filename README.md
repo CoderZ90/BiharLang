@@ -1,5 +1,9 @@
 # BiharLang
 
+<p align="center">
+  <img src="examples/assets/cover-image-biharlang.png" alt="BiharLang: A Toy Programming Language, In Bhojpuri" width="800">
+</p>
+
 **BiharLang is a toy programming language written in Go.**
 
 BiharLang is a dynamically typed, interpreted programming language where all keywords are derived from the Bhojpuri language.
