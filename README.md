@@ -79,7 +79,15 @@ biharlang/
 
 - **Go 1.21** or higher installed and configured in your system PATH.
 
-### Setup
+### From Installer
+Download the bh.exe file from the [Releases](https://github.com/CoderZ90/BiharLang/releases/tag/v0.0.1) section.
+
+    1. After Downloading the bh.exe file from the Assets section.
+    2. Move bh.exe to a folder on your system (e.g., C:\bihari).
+    3. Add that folder to your system's Environment Variables (PATH).
+    4. Open a new terminal and you are ready to code!
+
+### Manual Setup
 
 ```bash
 # Clone the repository
