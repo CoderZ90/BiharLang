@@ -1,7 +1,8 @@
 # BiharLang
 
 <p align="center">
-  <img src="examples/assets/cover-image-biharlang.png" alt="BiharLang: A Toy Programming Language, In Bhojpuri" width="800">
+    <img src="examples/assets/cover-image-biharlang.png" alt="BiharLang: A Toy Programming Language, In Bhojpuri" width="1200">
+    <img src="examples/assets/cover-two.png" alt="BiharLang: A Toy Programming Language, In Bhojpuri" width="1200">
 </p>
 
 **BiharLang is a toy programming language written in Go.**
@@ -430,7 +431,6 @@ type Object interface {
 | User Input | `input()` | Planned |
 | Arrays | `[1, 2, 3]` | Planned |
 | Hash Maps | `{"key": "value"}` | Planned |
-| Modulo Operator | `%` | Planned |
 | Logical Operators | `aur`, `ya`, `ulta` | Planned |
 | Comments | `//`, `/* */` | Planned |
 | Break / Continue | `bas`, `aage` | Planned |
