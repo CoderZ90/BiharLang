@@ -229,7 +229,7 @@ go test ./... -v
 
 ## Examples
 
-### Variables and Printing
+### 1. Variables and Printing
 
 ```text
 rakha naam = "Babu"
@@ -248,7 +248,7 @@ Ka ho Babu!
 
 ---
 
-### Conditionals
+### 2. Conditionals
 
 ```text
 rakha paisa = 500
@@ -268,7 +268,7 @@ Ameer ba
 
 ---
 
-### Functions and Recursion
+### 3. Functions and Recursion
 
 ```text
 kaam factorial(n) {
@@ -289,7 +289,7 @@ bol factorial(5)
 
 ---
 
-### While Loop
+### 4. While Loop
 
 ```text
 rakha x = 1
@@ -312,7 +312,7 @@ jabtak (x <= 5) {
 
 ---
 
-### Closures
+### 5. Closures
 
 ```text
 rakha x = 10
@@ -332,7 +332,7 @@ bol getX()
 
 ---
 
-### Star Pattern
+### 6. Star Pattern
 
 ```text
 rakha i = 1
